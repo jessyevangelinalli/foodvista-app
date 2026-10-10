@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>FoodVista AI</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f8fa;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: white;
+    padding: 28px 20px;
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+header h1 {
+    margin: 0;
+    color: #e74c3c;
+    font-size: 34px;
+}
+
+header p {
+    margin-top: 8px;
+    color: #666;
+}
+
+/* SEARCH */
+
+.search-section {
+    max-width: 900px;
+    margin: 28px auto;
+    padding: 0 20px;
+}
+
+.location-box {
+    margin-bottom: 12px;
+}
+
+.location-box label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+
+.location-input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+}
+
+.location-input:focus {
+    border-color: #e74c3c;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+}
+
+ .search-box select {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+    background: white;
+}
+
+.search-box select:focus {
+    border-color: #e74c3c;
+}
+
+.search-button {
+    padding: 14px 25px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.search-button:hover {
+    background: #c0392b;
+}
+
+/* FOOD BUTTONS */
+
+.food-section {
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+.food-section h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.food-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.food-button {
+    padding: 12px 18px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.food-button:hover {
+    background: #fff0ed;
+    border-color: #e74c3c;
+}
+
+/* STATUS */
+
+#status {
+    text-align: center;
+    margin: 20px;
+    color: #666;
+}
+
+/* BACK */
+
+#backSection {
+    text-align: center;
+    margin: 15px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background: #333;
+}
+
+/* RESULTS */
+
+#results {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 20px 40px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.cuisine {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* PLATFORMS */
+
+.platforms {
+    display: flex;
+    gap: 15px;
+}
+
+.platform-box {
+    flex: 1;
+    padding: 18px;
+    border-radius: 10px;
+    background: #f5f5f5;
+    line-height: 1.8;
+}
+
+.platform-box h3 {
+    margin-top: 0;
+}
+
+.swiggy-box {
+    border-left: 4px solid #fc8019;
+}
+
+.zomato-box {
+    border-left: 4px solid #e23744;
+}
+
+/* COMPARISON */
+
+.comparison {
+    margin-top: 15px;
+    padding: 14px;
+    background: #fff7f5;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.comparison-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* LINKS */
+
+.swiggy-button,
+.zomato-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.swiggy-button {
+    background: #fc8019;
+}
+
+.zomato-button {
+    background: #e23744;
+}
+
+.no-value {
+    color: #999;
+}
+
+.no-results {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* CITY RESULT */
+
+.city-result {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.city-result strong {
+    color: #e74c3c;
+}
+
+/* MATCH SCORE */
+
+.match-score {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .platforms {
+        flex-direction: column;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>FoodVista AI</h1>
+
+    <p>
+        Compare restaurants across Swiggy and Zomato
+    </p>
+
+</header>
+
+
+<!-- SEARCH -->
+
+<section class="search-section">
+
+    <div class="location-box">
+
+        <label for="cityInput">
+            📍 Location
+        </label>
+
+        <select
+    id="cityInput"
+    class="location-input"
+>
+    <option value="" selected disabled>Select a city</option>
+</select>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <select
+    id="searchInput"
+    class="search-input"
+>
+    <option value="" selected disabled>Select food / cuisine</option>
+</select>
+
+        <button
+            class="search-button"
+            onclick="searchRestaurants()"
+        >
+            🔍 Search
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS -->
+
+<p id="status">
+    Search for a restaurant or choose a food item above.
+</p>
+
+
+<!-- BACK -->
+
+<div
+    id="backSection"
+    style="display:none;"
+>
+
+    <button
+        class="back-button"
+        onclick="goBack()"
+    >
+        ← Back
+    </button>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<div id="results"></div>
+
+
+<script>
+
+
+const API_BASE =
+    location.protocol === "file:" ? "http://127.0.0.1:8000" : "";
+/* LOAD CITIES */
+
+async function loadCities() {
+
+    const citySelect =
+        document.getElementById("cityInput");
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/cities`);
+
+        if (!response.ok) {
+            throw new Error("Unable to load cities");
+        }
+
+        const data =
+            await response.json();
+
+        const cities =
+            data.cities || [];
+
+        citySelect.innerHTML =
+            `<option value="" selected disabled>Select a city</option>`;
+
+        cities.forEach(city => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = city;
+            option.textContent = city;
+
+            citySelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        citySelect.innerHTML =
+            `<option value="">Unable to load cities</option>`;
+
+    }
+}
+
+
+
+        
+/* LOAD FOOD / CUISINES FOR SELECTED CITY */
+
+async function loadFoodItems(city) {
+
+    const foodSelect =
+        document.getElementById("searchInput");
+
+    foodSelect.innerHTML =
+        `<option value="" selected disabled>Loading food / cuisines...</option>`;
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/search?city=${encodeURIComponent(city)}&query=`
+            );
+
+        if (!response.ok) {
+            throw new Error("Unable to load food items");
+        }
+
+        const data =
+            await response.json();
+
+        const cuisineSet =
+            new Set();
+
+        data.results.forEach(r => {
+
+            if (r.cuisine) {
+
+                r.cuisine
+                    .split(",")
+                    .map(item => item.trim())
+                    .filter(item => item)
+                    .forEach(item => {
+                        cuisineSet.add(item);
+                    });
+
+            }
+
+        });
+
+        const cuisines =
+            Array.from(cuisineSet).sort();
+
+        foodSelect.innerHTML =
+            `<option value="" selected disabled>Select food / cuisine</option>`;
+
+        if (cuisines.length === 0) {
+
+            foodSelect.innerHTML =
+                `<option value="">No food / cuisine available</option>`;
+
+            return;
+        }
+
+        cuisines.forEach(cuisine => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = cuisine;
+            option.textContent = cuisine;
+
+            foodSelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        foodSelect.innerHTML =
+            `<option value="">Unable to load food / cuisines</option>`;
+
+    }
+}
+
+/* CITY CHANGE */
+
+document
+    .getElementById("cityInput")
+    .addEventListener("change", function () {
+
+        const city = this.value;
+
+        if (city) {
+            loadFoodItems(city);
+        }
+
+    });
+
+/* SAFE DISPLAY */
+
+function displayValue(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return `
+            <span class="no-value">
+                Not available
+            </span>
+        `;
+
+    }
+
+    return value;
+
+}
+
+
+/* FOOD BUTTON */
+
+function searchByFood(food) {
+
+    document
+        .getElementById("searchInput")
+        .value = food;
+
+    searchRestaurants();
+
+}
+
+
+/* MAIN SEARCH */
+
+function searchRestaurants() {
+
+    const searchText =
+        document
+            .getElementById("searchInput")
+            .value
+            .trim();
+
+
+    const city =
+        document
+            .getElementById("cityInput")
+            .value
+            .trim();
+
+
+    const status =
+        document.getElementById("status");
+
+
+    const results =
+        document.getElementById("results");
+
+
+    const back =
+        document.getElementById("backSection");
+
+
+    /* VALIDATION */
+
+    if (!city) {
+
+    status.textContent =
+        "Please select a city.";
+
+    results.innerHTML = "";
+
+    return;
+}
+
+
+    if (!searchText) {
+
+    status.textContent =
+        "Please select a food or cuisine.";
+
+    results.innerHTML = "";
+
+    back.style.display = "none";
+
+    return;
+}
+
+
+    status.textContent =
+        "Searching...";
+
+
+    results.innerHTML = "";
+
+    back.style.display = "none";
+
+
+    /*
+        CURRENT BACKEND:
+
+        /search?city=Vizag&query=chicken%20biryani
+    */
+
+    const url =
+        `${API_BASE}/search?city=${encodeURIComponent(city)}&query=${encodeURIComponent(searchText)}`;
+
+
+    fetch(url)
+
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "API request failed"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+
+        .then(data => {
+
+
+            if (data.count === 0) {
+
+                status.textContent =
+                    `No results found for "${searchText}" in ${city}.`;
+
+
+                results.innerHTML = `
+
+                    <div class="no-results">
+
+                        <h2>
+                            😕 No Results
+                        </h2>
+
+                        <p>
+
+                            No restaurant or food
+                            matching
+
+                            <strong>
+                                "${searchText}"
+                            </strong>
+
+                            was found in
+
+                            <strong>
+                                ${city}
+                            </strong>.
+
+                        </p>
+
+                        <p>
+                            Try another restaurant,
+                            cuisine or food item.
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                back.style.display =
+                    "block";
+
+
+                return;
+
+            }
+
+
+            status.innerHTML = `
+
+                <div class="city-result">
+
+                    Showing results for
+                    <strong>
+                        "${searchText}"
+                    </strong>
+
+                    in
+
+                    <strong>
+                        ${city}
+                    </strong>
+
+                    — ${data.count} result(s)
+
+                </div>
+
+            `;
+
+
+            back.style.display =
+                "block";
+
+
+            data.results.forEach(r => {
+
+
+                const swiggy =
+                    r.swiggy || {};
+
+
+                const zomato =
+                    r.zomato || {};
+                const isNewCity =
+                    !swiggy.url && !zomato.url;
+
+                const swiggyPriceHtml = isNewCity
+                    ? `<br><strong>Avg Price:</strong> ${displayValue(r.average_price)}`
+                    : "";
+
+                const zomatoPriceHtml = isNewCity
+                    ? `<br><strong>Median item price:</strong> ${displayValue(zomato.avg_item_price)}`
+                    : "";
+
+                const zomatoAddressHtml = isNewCity
+                    ? ""
+                    : `<br><strong>Address:</strong> ${displayValue(zomato.address)}`;
+
+
+                const card =
+                    document.createElement("div");
+
+
+                card.className =
+                    "card";
+
+
+                card.innerHTML = `
+
+                    <h2>
+
+                        ${displayValue(
+                            r.restaurant_name
+                        )}
+
+                    </h2>
+
+
+                    <div class="cuisine">
+
+                        🍽️
+
+                        ${displayValue(
+                            r.cuisine
+                        )}
+
+                    </div>
+
+
+                    <div class="platforms">
+
+
+                        <!-- SWIGGY -->
+
+                        <div
+                            class="platform-box swiggy-box"
+                        >
+
+                            <h3>
+                                🟠 Swiggy
+                            </h3>
+
+
+                            <strong>
+                                Rating:
+                            </strong>
+
+                            ${displayValue(
+                                swiggy.rating
+                            )}
+                            ⭐
+
+
+                            <br>
+
+
+                            <strong>
+                                Rating Count:
+                            </strong>
+
+                            ${displayValue(
+                                swiggy.rating_count
+                            )}
+
+
+                            <br>
+
+
+                            <strong>
+                                Area:
+                            </strong>
+
+                            ${displayValue(
+                                swiggy.area
+                            )}
+
+                            ${swiggyPriceHtml}
+
+
+                            ${
+                                swiggy.url
+                                ?
+                                `
+
+                                <br>
+
+                                <a
+                                    class="swiggy-button"
+                                    href="${swiggy.url}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+
+                                    Open on Swiggy
+
+                                </a>
+
+                                `
+                                :
+                                ""
+                            }
+
+                        </div>
+
+
+                        <!-- ZOMATO -->
+
+                        <div
+                            class="platform-box zomato-box"
+                        >
+
+                            <h3>
+                                🔴 Zomato
+                            </h3>
+
+
+                            <strong>
+                                Rating:
+                            </strong>
+
+                            ${displayValue(
+                                zomato.rating
+                            )}
+                            ⭐
+
+
+                            <br>
+
+
+                            <strong>
+                                Rating Count:
+                            </strong>
+
+                            ${displayValue(
+                                zomato.rating_count
+                            )}
+
+
+                            <br>
+
+
+                            <strong>
+                                Locality:
+                            </strong>
+
+                            ${displayValue(
+                                zomato.locality
+                            )}
+
+                            ${zomatoAddressHtml}
+                            ${zomatoPriceHtml}
+
+
+
+                            ${
+                                zomato.url
+                                ?
+                                `
+
+                                <br>
+
+                                <a
+                                    class="zomato-button"
+                                    href="${zomato.url}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+
+                                    Open on Zomato
+
+                                </a>
+
+                                `
+                                :
+                                ""
+                            }
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- COMPARISON -->
+
+                    <div class="comparison">
+
+                        <div class="comparison-title">
+
+                            🍽️ FoodVista Comparison
+
+                        </div>
+
+
+                        <div>
+
+                            Swiggy Rating:
+
+                            <strong>
+                                ${displayValue(
+                                    swiggy.rating
+                                )}
+                            </strong>
+
+                            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+                            Zomato Rating:
+
+                            <strong>
+                                ${displayValue(
+                                    zomato.rating
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="match-score">
+
+                            Match Score:
+
+                            ${displayValue(
+                                r.match_score
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                results.appendChild(card);
+
+            });
+
+        })
+
+
+        .catch(error => {
+
+            console.error(error);
+
+
+            status.textContent =
+                "Unable to connect to FoodVista API.";
+
+
+            results.innerHTML = `
+
+                <div class="no-results">
+
+                    <h2>
+                        ⚠️ Connection Error
+                    </h2>
+
+                    <p>
+                        Please make sure the
+                        FoodVista backend is running.
+                    </p>
+
+                    <p>
+
+                        Backend:
+
+                        <strong>
+                            http://127.0.0.1:8000
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+}
+
+
+/* BACK */
+
+function goBack() {
+
+    document
+    .getElementById("searchInput")
+    .selectedIndex = 0;
+
+
+    document
+        .getElementById("results")
+        .innerHTML = "";
+
+
+    document
+        .getElementById("backSection")
+        .style.display = "none";
+
+
+    document
+        .getElementById("status")
+        .textContent =
+            "Search for a restaurant or choose a food item above.";
+
+}
+/* INITIALIZE */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    loadCities();
+
+});
+
+</script>
+
+
+</body>
+
+</html>
