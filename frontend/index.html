@@ -294,6 +294,38 @@ header p {
     color: #666;
 }
 
+/* RECOMMENDATION */
+
+.recommendation {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.rec-swiggy {
+    background: #fff1e6;
+    color: #c45a00;
+}
+
+.rec-zomato {
+    background: #fdeaec;
+    color: #b3202d;
+}
+
+.rec-tie {
+    background: #eef4ff;
+    color: #2c4a8a;
+}
+
+.rec-none {
+    background: #f0f0f0;
+    color: #666;
+    font-weight: normal;
+}
+
 /* MOBILE */
 
 @media (max-width: 700px) {
@@ -575,6 +607,78 @@ function displayValue(value) {
 
 }
 
+/* RECOMMENDATION */
+
+function parseCount(value) {
+
+    const text =
+        String(value || "")
+            .toUpperCase()
+            .replace(/,/g, "");
+
+    const match =
+        text.match(/([0-9]+(?:\.[0-9]+)?)\s*(K?)/);
+
+    if (!match) {
+        return 0;
+    }
+
+    let number = parseFloat(match[1]);
+
+    if (match[2] === "K") {
+        number = number * 1000;
+    }
+
+    return number;
+
+}
+
+
+function getRecommendation(swiggy, zomato) {
+
+    const swiggyRating = parseFloat(swiggy.rating);
+    const zomatoRating = parseFloat(zomato.rating);
+
+    const swiggyCount = parseCount(swiggy.rating_count);
+    const zomatoCount = parseCount(zomato.rating_count);
+
+    if (isNaN(swiggyRating) || isNaN(zomatoRating)) {
+        return {
+            type: "none",
+            text: "Not enough data to recommend"
+        };
+    }
+
+    if (swiggyCount < 50 || zomatoCount < 50) {
+        return {
+            type: "none",
+            text: "Too few ratings to recommend reliably"
+        };
+    }
+
+    const difference =
+        Math.abs(swiggyRating - zomatoRating);
+
+    if (difference < 0.2) {
+        return {
+            type: "tie",
+            text: "Both platforms rated about the same"
+        };
+    }
+
+    if (swiggyRating > zomatoRating) {
+        return {
+            type: "swiggy",
+            text: "Higher rated on Swiggy"
+        };
+    }
+
+    return {
+        type: "zomato",
+        text: "Higher rated on Zomato"
+    };
+
+}
 
 /* FOOD BUTTON */
 
@@ -769,6 +873,8 @@ function searchRestaurants() {
 
                 const zomato =
                     r.zomato || {};
+                const rec =
+                    getRecommendation(swiggy, zomato);
                 const isNewCity =
                     !swiggy.url && !zomato.url;
 
@@ -1000,6 +1106,12 @@ function searchRestaurants() {
                                 )}
                             </strong>
 
+                        </div>
+
+                        <div class="recommendation rec-${rec.type}">
+                            ${rec.type === "none" ? "ℹ️" : "⭐"}
+                            ${rec.text}
+                            ${isNewCity && (rec.type === "swiggy" || rec.type === "zomato") ? "<br><small>(Zomato rating may be dining rating)</small>" : ""}
                         </div>
 
 
